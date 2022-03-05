@@ -1,0 +1,31 @@
+<html>
+	<body>
+		<h1>rotating thing</h1>
+		<img>
+		<script>
+			(async function() {
+				const data = await fetch('https://www.stemplayer.com/json/photo-bundle-png-0.json');
+				const anim = await data.json();
+				const imgEl = document.querySelector('img');
+				console.log(anim);
+				
+				// Create render loop
+				let currentFrame = 0;
+				
+				function render() {
+					const frameData = anim.frames[currentFrame];
+					imgEl.setAttribute("src", frameData);
+					
+					if((currentFrame + 1) == anim.frames.length)
+						currentFrame = 0;
+					else
+						currentFrame++;
+					
+					requestAnimationFrame(render);
+				}
+				
+				render();
+			})();
+		</script>
+	</body>
+</html>
